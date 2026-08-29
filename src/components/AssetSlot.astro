@@ -1,0 +1,24 @@
+---
+interface Props {
+  src?: string;
+  alt: string;
+  label: string;
+  spec: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { src = "", alt, label, spec, class: className = "", eager = false } = Astro.props;
+---
+
+<div class:list={["asset-slot", className, { "has-image": Boolean(src) }]}> 
+  {src ? (
+    <img src={src} alt={alt} loading={eager ? "eager" : "lazy"} decoding="async" />
+  ) : (
+    <div class="asset-slot__empty" role="img" aria-label={`${alt}. ${spec}`}>
+      <span>IMAGE ASSET</span>
+      <strong>{label}</strong>
+      <small>{spec}</small>
+    </div>
+  )}
+</div>

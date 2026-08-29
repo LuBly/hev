@@ -1,0 +1,49 @@
+---
+import { getCopy } from "../i18n/copy";
+import { getLanguageSwitchPath, withBase, type Lang } from "../config/site";
+
+interface Props {
+  lang: Lang;
+  pathname: string;
+}
+
+const { lang, pathname } = Astro.props;
+const t = getCopy(lang);
+const otherLang = lang === "ko" ? "EN" : "KR";
+const switchPath = getLanguageSwitchPath(pathname, lang);
+const localeRoot = `/${lang}`;
+const root = withBase(localeRoot);
+const navItems = [
+  { label: t.nav.home, href: `${root}/`, match: `${localeRoot}/` },
+  { label: t.nav.about, href: withBase(`${localeRoot}/about/`), match: "/about/" },
+  { label: t.nav.projects, href: withBase(`${localeRoot}/projects/`), match: "/projects/" },
+  { label: t.nav.news, href: withBase(`${localeRoot}/news/`), match: "/news/" },
+  { label: t.nav.contact, href: withBase(`${localeRoot}/contact/`), match: "/contact/" },
+];
+
+function isActive(match: string) {
+  if (match === `${localeRoot}/`) return pathname.endsWith(`${localeRoot}/`) || pathname.endsWith(localeRoot);
+  return pathname.includes(match);
+}
+---
+
+<header class="site-header">
+  <div class="site-shell site-header__inner">
+    <a class="wordmark" href={`${root}/`} aria-label={`${t.nav.home} - HEV`}>HEV</a>
+    <nav class="desktop-nav" aria-label="Primary">
+      {navItems.map((item) => (
+        <a class:list={["nav-link", { "is-active": isActive(item.match) }]} href={item.href} aria-current={isActive(item.match) ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <a class="language-link" href={switchPath} aria-label={lang === "ko" ? "View in English" : "한국어로 보기"}>{otherLang}</a>
+    <details class="mobile-nav">
+      <summary>{t.nav.menu}</summary>
+      <nav aria-label="Mobile">
+        {navItems.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href={switchPath}>{otherLang}</a>
+      </nav>
+    </details>
+  </div>
+</header>

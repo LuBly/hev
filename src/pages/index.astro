@@ -1,0 +1,18 @@
+---
+import { withBase } from "../config/site";
+const destination = withBase("/ko/");
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="refresh" content={`0; url=${destination}`} />
+    <link rel="canonical" href={destination} />
+    <title>HEV</title>
+  </head>
+  <body>
+    <p><a href={destination}>HEV 홈페이지로 이동</a></p>
+  </body>
+</html>

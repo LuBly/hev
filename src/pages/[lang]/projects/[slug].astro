@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from "astro:content";
+import AssetSlot from "../../../components/AssetSlot.astro";
+import BusinessCta from "../../../components/BusinessCta.astro";
+import { withBase, type Lang } from "../../../config/site";
+import { getCopy } from "../../../i18n/copy";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((entry) => ({
+    params: { lang: entry.data.lang, slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const lang = entry.data.lang as Lang;
+const t = getCopy(lang);
+const { Content } = await render(entry);
+const data = entry.data;
+---
+
+<BaseLayout lang={lang} title={`${data.title} | HEV`} description={data.excerpt} image={data.image}>
+  <article class="detail-page">
+    <header class="site-shell detail-hero" data-reveal>
+      <a class="text-link detail-back" href={withBase(`/${lang}/projects/`)}><span aria-hidden="true">←</span>{t.projects.back}</a>
+      <p class="project-type">{data.type}</p>
+      <h1>{data.title}</h1>
+      <h2>{data.tagline}</h2>
+      <p>{data.excerpt}</p>
+    </header>
+    <div class="site-shell">
+      <AssetSlot src={data.image} alt={data.imageAlt} label={data.title} spec={data.assetSpec} class="detail-media" eager />
+    </div>
+    <div class="section-block site-shell detail-layout">
+      <aside class="detail-info" data-reveal>
+        <h2>{t.projects.infoTitle}</h2>
+        <dl>
+          {data.info.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </aside>
+      <div class="prose" data-reveal>
+        <Content />
+      </div>
+    </div>
+    <section class="section-block detail-dark" aria-labelledby="core-title">
+      <div class="site-shell">
+        <p class="section-label">PROJECT CORE</p>
+        <h2 id="core-title">{t.projects.coreTitle}</h2>
+        <div class="core-grid">
+          {data.core.map((item, index) => (
+            <article data-reveal>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <p>{item.title}</p>
+              <h3>{item.heading}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+    <section class="section-block site-shell detail-lists">
+      <div data-reveal>
+        <h2>{t.projects.highlightsTitle}</h2>
+        <ul>{data.highlights.map((item) => <li>{item}</li>)}</ul>
+      </div>
+      <div data-reveal>
+        <h2>{t.projects.opportunitiesTitle}</h2>
+        <ul>{data.opportunities.map((item) => <li>{item}</li>)}</ul>
+      </div>
+    </section>
+  </article>
+  <BusinessCta lang={lang} />
+</BaseLayout>

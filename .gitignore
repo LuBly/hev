@@ -1,0 +1,10 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.DS_Store
+*.log
+
+# Local review artifacts
+tmp/
+페이지_기획_*.pdf

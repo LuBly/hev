@@ -1,0 +1,34 @@
+---
+import { getCopy } from "../i18n/copy";
+import { siteConfig, withBase, type Lang } from "../config/site";
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getCopy(lang);
+const root = withBase(`/${lang}`);
+---
+
+<footer class="site-footer">
+  <div class="site-shell footer-grid">
+    <div>
+      <a class="wordmark wordmark--footer" href={`${root}/`}>HEV</a>
+      <p>{t.footer.description}</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href={`${root}/about/`}>{t.nav.about}</a>
+      <a href={`${root}/projects/`}>{t.nav.projects}</a>
+      <a href={`${root}/news/`}>{t.nav.news}</a>
+      <a href={`${root}/contact/`}>{t.nav.contact}</a>
+    </nav>
+    <div class="footer-meta">
+      <span>{t.footer.contact}</span>
+      {siteConfig.businessEmail ? <a href={`mailto:${siteConfig.businessEmail}`}>{siteConfig.businessEmail}</a> : <strong>{t.contact.emailPending}</strong>}
+      <span>{t.footer.location}</span>
+      <strong>{siteConfig.location[lang]}</strong>
+    </div>
+  </div>
+  <div class="site-shell footer-bottom">
+    <span>© {new Date().getFullYear()} {t.footer.copyright}</span>
+    <span>{lang === "ko" ? "한국어 / English" : "한국어 / English"}</span>
+  </div>
+</footer>

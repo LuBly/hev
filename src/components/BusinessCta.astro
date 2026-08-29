@@ -1,0 +1,17 @@
+---
+import { withBase, type Lang } from "../config/site";
+import { getCopy } from "../i18n/copy";
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getCopy(lang);
+---
+
+<section class="business-cta" data-reveal>
+  <div class="site-shell business-cta__inner">
+    <div>
+      <h2>{t.home.ctaTitle}</h2>
+      <p>{t.home.ctaBody}</p>
+    </div>
+    <a class="button button--dark" href={withBase(`/${lang}/contact/`)}>{t.common.businessInquiry}</a>
+  </div>
+</section>

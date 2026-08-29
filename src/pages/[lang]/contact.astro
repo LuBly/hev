@@ -1,0 +1,80 @@
+---
+import PageIntro from "../../components/PageIntro.astro";
+import { languages, siteConfig, type Lang } from "../../config/site";
+import { getCopy } from "../../i18n/copy";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = getCopy(lang);
+const emailReady = Boolean(siteConfig.businessEmail);
+---
+
+<BaseLayout lang={lang} title={`${t.nav.contact} | HEV`} description={t.contact.lead}>
+  <PageIntro kicker="CONTACT" title={t.contact.title} lead={t.contact.lead} />
+  <div class="section-block site-shell contact-layout">
+    <aside class="contact-aside" data-reveal>
+      <p>{t.contact.body}</p>
+      <h2>{t.contact.typesTitle}</h2>
+      <ul>{t.contact.types.map((type) => <li>{type}</li>)}</ul>
+      <div class="contact-direct">
+        <span>{t.footer.contact}</span>
+        <strong>{emailReady ? siteConfig.businessEmail : t.contact.emailPending}</strong>
+      </div>
+    </aside>
+    <form class="contact-form" data-contact-form data-business-email={siteConfig.businessEmail} data-reveal>
+      <h2>{t.contact.formTitle}</h2>
+      <div class="field-grid">
+        <label>
+          <span>{t.contact.name}</span>
+          <input type="text" name="name" autocomplete="name" required />
+        </label>
+        <label>
+          <span>{t.contact.company}</span>
+          <input type="text" name="company" autocomplete="organization" />
+        </label>
+        <label class="field-wide">
+          <span>{t.contact.email}</span>
+          <input type="email" name="email" autocomplete="email" required />
+        </label>
+        <label class="field-wide">
+          <span>{t.contact.project}</span>
+          <select name="project">
+            {t.contact.projectOptions.map((option) => <option value={option}>{option}</option>)}
+          </select>
+        </label>
+        <label class="field-wide">
+          <span>{t.contact.message}</span>
+          <textarea name="message" rows="8" required></textarea>
+        </label>
+      </div>
+      <button class="button button--dark field-wide" type="submit" disabled={!emailReady}>{t.contact.submit}</button>
+      {!emailReady && <p class="form-note">{t.contact.unavailable}</p>}
+    </form>
+  </div>
+  {emailReady && (
+    <script is:inline>
+      const form = document.querySelector("[data-contact-form]");
+      form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!(form instanceof HTMLFormElement)) return;
+        const recipient = form.dataset.businessEmail;
+        if (!recipient) return;
+        const values = new FormData(form);
+        const subject = `[HEV] ${values.get("project") ?? "Business Inquiry"}`;
+        const body = [
+          `Name: ${values.get("name") ?? ""}`,
+          `Company: ${values.get("company") ?? ""}`,
+          `Email: ${values.get("email") ?? ""}`,
+          `Project: ${values.get("project") ?? ""}`,
+          "",
+          String(values.get("message") ?? ""),
+        ].join("\n");
+        window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    </script>
+  )}
+</BaseLayout>

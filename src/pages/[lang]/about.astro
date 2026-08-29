@@ -1,0 +1,71 @@
+---
+import AssetSlot from "../../components/AssetSlot.astro";
+import BusinessCta from "../../components/BusinessCta.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import { languages, siteConfig, type Lang } from "../../config/site";
+import { getCopy } from "../../i18n/copy";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = getCopy(lang);
+---
+
+<BaseLayout lang={lang} title={`${t.nav.about} | HEV`} description={t.about.lead}>
+  <PageIntro kicker="ABOUT HEV" title={t.about.title} lead={t.about.lead} />
+  <div class="site-shell">
+    <AssetSlot
+      src={siteConfig.images.aboutStudio}
+      alt={lang === "ko" ? "HEV 스튜디오 소개 이미지" : "HEV studio introduction image"}
+      label="ABOUT HEV"
+      spec="public/images/about/hev-studio-wide.webp · 2400x1000 · 12:5"
+      class="about-media"
+    />
+  </div>
+
+  <section class="section-block site-shell about-story" data-reveal>
+    <p>{t.about.body}</p>
+    <div class="question-grid">
+      {t.about.questions.map((question, index) => (
+        <blockquote>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <p>{question}</p>
+        </blockquote>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-block what-section" aria-labelledby="what-title">
+    <div class="site-shell">
+      <p class="section-label">CONTENT · EXPERIENCE · TECHNOLOGY</p>
+      <h2 id="what-title">{t.about.whatTitle}</h2>
+      <div class="what-grid">
+        {t.about.what.map((item, index) => (
+          <article data-reveal>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <p>{item.title}</p>
+            <h3>{item.heading}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-block site-shell approach-grid">
+    <article data-reveal>
+      <p class="section-label">{t.about.approachTitle}</p>
+      <h2>{t.about.approachHeading}</h2>
+      <p>{t.about.approachBody}</p>
+    </article>
+    <aside data-reveal>
+      <p>{t.about.visionTitle}</p>
+      <strong>{t.about.vision}</strong>
+    </aside>
+  </section>
+
+  <BusinessCta lang={lang} />
+</BaseLayout>

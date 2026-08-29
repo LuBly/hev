@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../config/site";
+---
+
+<BaseLayout lang="ko" title="Page Not Found | HEV" description="요청한 페이지를 찾을 수 없습니다.">
+  <section class="not-found site-shell">
+    <p>404</p>
+    <h1>페이지를 찾을 수 없습니다.</h1>
+    <p>The page you requested could not be found.</p>
+    <div class="button-row">
+      <a class="button button--dark" href={withBase("/ko/")}>한국어 홈</a>
+      <a class="button button--ghost" href={withBase("/en/")}>English Home</a>
+    </div>
+  </section>
+</BaseLayout>
