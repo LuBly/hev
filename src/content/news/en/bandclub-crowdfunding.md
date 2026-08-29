@@ -1,7 +1,7 @@
 ---
 lang: en
 slug: bandclub-crowdfunding
-title: BandClub! Crowdfunding Reaches 214%
+title: Crowdfunding Reaches 214%
 excerpt: The BandClub! crowdfunding campaign successfully reached 214% of its funding goal.
 category: bandclub
 categoryLabel: BandClub!

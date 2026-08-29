@@ -1,7 +1,7 @@
 ---
 lang: ko
 slug: bandclub-steam-demo
-title: BandClub! Steam 데모 공개 예정
+title: Steam 데모 공개 예정
 excerpt: BandClub!의 PC 데모 버전을 Steam을 통해 공개할 예정입니다.
 category: bandclub
 categoryLabel: BandClub!

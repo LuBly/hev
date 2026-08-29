@@ -1,7 +1,7 @@
 ---
 lang: ko
 slug: bandclub-crowdfunding
-title: BandClub! 크라우드펀딩 214% 달성
+title: 크라우드펀딩 214% 달성
 excerpt: BandClub! 크라우드펀딩이 목표 금액의 214%를 달성하며 성공적으로 종료되었습니다.
 category: bandclub
 categoryLabel: BandClub!

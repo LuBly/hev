@@ -1,7 +1,7 @@
 ---
 lang: ko
 slug: bandclub-tgs-2026
-title: BandClub!, 도쿄게임쇼 2026 참가
+title: 도쿄게임쇼 2026 참가
 excerpt: BandClub!이 도쿄게임쇼 2026에 참가합니다. 현장에서 개발 중인 최신 버전을 직접 만나볼 수 있습니다.
 category: bandclub
 categoryLabel: BandClub!

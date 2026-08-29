@@ -1,7 +1,7 @@
 ---
 lang: en
 slug: bandclub-tgs-2026
-title: BandClub! to Exhibit at Tokyo Game Show 2026
+title: Exhibiting at Tokyo Game Show 2026
 excerpt: BandClub! will be exhibited at Tokyo Game Show 2026. Visitors will be able to experience the latest version at the event.
 category: bandclub
 categoryLabel: BandClub!

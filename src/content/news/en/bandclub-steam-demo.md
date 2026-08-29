@@ -1,7 +1,7 @@
 ---
 lang: en
 slug: bandclub-steam-demo
-title: BandClub! Steam Demo Coming Soon
+title: Steam Demo Coming Soon
 excerpt: The PC demo version of BandClub! is scheduled to be released on Steam.
 category: bandclub
 categoryLabel: BandClub!
