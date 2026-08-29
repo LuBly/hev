@@ -16,6 +16,7 @@ const lang = Astro.params.lang as Lang;
 const t = getCopy(lang);
 const projects = await getProjects(lang);
 const news = (await getNews(lang)).slice(0, 3);
+const [homeTitleLead, homeTitleTail] = t.home.title.split(/,\s*/, 2);
 ---
 
 <BaseLayout lang={lang} title={`HEV | ${t.home.title}`} description={t.home.summary} image={siteConfig.images.homeHero}>
@@ -30,7 +31,14 @@ const news = (await getNews(lang)).slice(0, 3);
     />
     <div class="site-shell home-hero__content" data-reveal>
       <p class="home-hero__brand">HEV</p>
-      <h1>{t.home.title}</h1>
+      <h1>
+        {lang === "ko" ? (
+          <>
+            {homeTitleLead},<br />
+            {homeTitleTail}
+          </>
+        ) : t.home.title}
+      </h1>
       <p>{t.home.summary}</p>
       <div class="button-row">
         <a class="button button--light" href={withBase(`/${lang}/projects/`)}>{t.common.viewProjects}</a>
